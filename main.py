@@ -1,5 +1,6 @@
 from enum import Enum
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
 class ModelName(str, Enum):
@@ -14,6 +15,15 @@ class Item(BaseModel):
     tax: float | None = None
 
 app = FastAPI()
+
+# クエリパラメータと文字列の検証
+@app.get("/items/")
+async def read_items(q: Annotated[str, Query(min_length=3)]):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
 
 # リクエストボディ
 @app.post("/items/{item_id}")
