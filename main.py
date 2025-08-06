@@ -1,11 +1,16 @@
 from enum import Enum
 from datetime import datetime, time, timedelta
 from uuid import UUID
-from fastapi import FastAPI, Query, Body
+from fastapi import FastAPI, Query, Body, Cookie
 from pydantic import BaseModel, Field
 from typing_extensions import Annotated, Literal
 
 app = FastAPI()
+
+# # クッキーのパラメータ
+# @app.get("/items/")
+# async def read_items(ads_id: Annotated[str | None, Cookie()] = None):
+#     return {"ads_id": ads_id}
 
 # スキーマの追加 -例
 # class Item(BaseModel):
