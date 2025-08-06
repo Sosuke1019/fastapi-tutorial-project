@@ -1,20 +1,59 @@
 from enum import Enum
-from fastapi import FastAPI, Query
+from datetime import datetime, time, timedelta
+from uuid import UUID
+from fastapi import FastAPI, Query, Body
 from pydantic import BaseModel, Field
 from typing_extensions import Annotated, Literal
 
-# class ModelName(str, Enum):
-#     alexnet= "alexnet"
-#     resnet = "resnet"
-#     lenet = "lenet"
+app = FastAPI()
 
+# スキーマの追加 -例
 # class Item(BaseModel):
 #     name: str
 #     description: str | None = None
 #     price: float
 #     tax: float | None = None
 
-app = FastAPI()
+# @app.put("/items/{item_id}")
+# async def read_items(
+#     item_id: UUID,
+#     start_datetime: Annotated[datetime, Body()],
+#     end_datetime: Annotated[datetime, Body()],
+#     process_after: Annotated[timedelta, Body()],
+#     repeat_at: Annotated[time | None, Body()] = None
+# ):
+#     start_process = start_datetime + process_after
+#     duration = end_datetime - start_datetime
+#     return {
+#         "item_id": item_id,
+#         "start_datetime": start_datetime,
+#         "end_datetime": end_datetime,
+#         "process_after": process_after,
+#         "repeat_at": repeat_at,
+#         "start_process": start_process,
+#         "duration": duration,
+#     }
+
+# @app.put("/items/{item_id}")
+# async def update_item(
+#     item_id: int, 
+#     item: Annotated[
+#         Item,
+#         Body(
+#             examples=[
+#                 {
+#                     "name": "hogehuga",
+#                     "description": "A very nice Item",
+#                     "price": 35.4,
+#                     "tax": 3.2,
+#                 }
+#             ],
+#         )
+#     ]
+    
+# ):
+#     results = {"item_id": item_id, "item": item}
+#     return results
 
 # # ボディ -ネストされたモデル
 # class Image(BaseModel):
@@ -112,35 +151,46 @@ app = FastAPI()
 #         results.update({"q": q})
 #     return results
 
-# # # リクエストボディ
-# # @app.post("/items/{item_id}")
-# # # パラメータがPydanticモデル型で宣言された場合、リクエストボディとして解釈される
-# # async def create_item(item_id: int, item: Item, q: str | None = None):
-# #     item_dict = item.dict()
-# #     if item.tax is not None:
-# #         price_with_tax = item.price + item.tax
-# #         item_dict.update({"price_with_tax": price_with_tax})
-# #     return item_dict
+# # リクエストボディ
+# class Item(BaseModel):
+#     name: str
+#     description: str | None = None
+#     price: float
+#     tax: float | None = None
 
-# # # クエリパラメータ
-# # fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+# @app.post("/items/{item_id}")
+# # パラメータがPydanticモデル型で宣言された場合、リクエストボディとして解釈される
+# async def create_item(item_id: int, item: Item, q: str | None = None):
+#     item_dict = item.dict()
+#     if item.tax is not None:
+#         price_with_tax = item.price + item.tax
+#         item_dict.update({"price_with_tax": price_with_tax})
+#     return item_dict
 
-# # @app.get("/users/{item_id}")
-# # async def read_user_item(item_id: str, user_id: str, q: str | None = None):
-# #     item = {"アイテム番号": item_id, "ユーザー番号" :user_id, "option": q}
-# #     return item
+# # クエリパラメータ
+# fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
 
-# # # パスパラメータ
-# # @app.get("/models/{model_name}") # パスオペレーションデコレータを記述
-# # async def get_model(model_name: ModelName): # パスオペレーション関数を定義
-# #     if model_name is ModelName.alexnet:
-# #         return {"mode_name": model_name, "message": "Deep Learning FTW!"}
+# @app.get("/users/{item_id}")
+# async def read_user_item(item_id: str, user_id: str, q: str | None = None):
+#     item = {"アイテム番号": item_id, "ユーザー番号" :user_id, "option": q}
+#     return item
+
+# # パスパラメータ
+# class ModelName(str, Enum):
+#     alexnet= "alexnet"
+#     resnet = "resnet"
+#     lenet = "lenet"
+
+# @app.get("/models/{model_name}") # パスオペレーションデコレータを記述
+# async def get_model(model_name: ModelName): # パスオペレーション関数を定義
+#     if model_name is ModelName.alexnet:
+#         return {"mode_name": model_name, "message": "Deep Learning FTW!"}
     
-# #     if model_name.value == "resnet":
-# #         return {"mode_name": model_name, "message": "LeCNN all the images"}
+#     if model_name.value == "resnet":
+#         return {"mode_name": model_name, "message": "LeCNN all the images"}
     
-# #     return {"mode_name": model_name, "message": "Have some residuals"}
+#     return {"mode_name": model_name, "message": "Have some residuals"}
 
-# # @app.get("/files/{path:path}")
-# # async def read_file(path: str):
-# #     return {"file_path": path}
+# @app.get("/files/{path:path}")
+# async def read_file(path: str):
+#     return {"file_path": path}
