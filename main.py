@@ -16,7 +16,41 @@ from typing_extensions import Annotated, Literal
 
 app = FastAPI()
 
+# # ボディ -ネストされたモデル
+# class Image(BaseModel):
+#     url: HttpUrl
+#     name: str
 
+# class Item(BaseModel):
+#     name: str
+#     description: str | None = None
+#     price: float
+#     tax: float | None = None
+#     tags: set[str] = set()
+#     image: list[Image] | None = None
+
+# class Offer(BaseModel):
+#     name: str
+#     description: str | None = None
+#     price: float
+#     items: list[Item]
+
+# @app.post("/index-weights/")
+# async def create_index_weights(weights: dict[int, float]):
+#     return weights
+
+# @app.post("/images/multiple")
+# async def create_multiple_images(image: list[Image]):
+#     return image
+
+# @app.post("/offers/")
+# async def create_offer(offer: Offer):
+#     return {"offer": offer}
+
+# @app.put("/items/{item_id}")
+# async def update_item(item_id: int, item: Item):
+#     results = {"アイテムid": item_id, "アイテム": item}
+#     return results
 
 # # ボディ -フィールド
 # class Item(BaseModel):
