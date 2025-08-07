@@ -7,6 +7,32 @@ from typing_extensions import Annotated, Literal
 
 app = FastAPI()
 
+# # ヘッダーパラメータモデル
+# class CommonHeaders(BaseModel):
+#     model_config = {"extra": "forbid"}
+
+#     host: str
+#     save_data: bool
+#     if_modified_since: str | None = None
+#     traceparent: str | None = None
+#     x_tag: list[str] = []
+
+# @app.get("/items/")
+# async def read_items(headers: Annotated[CommonHeaders, Header()]):
+#     return {"headers": headers}
+
+# # クッキーパラメータモデル
+# class Cookies(BaseModel):
+#     model_config = {"extra": "forbid"}
+
+#     session_id: str
+#     fatebook_tracker: str | None
+#     googall_tracker: str | None = None
+
+# @app.get("/items/")
+# async def read_items(cookies: Annotated[Cookies, Cookie()]):
+#     return {"cookies": cookies}
+
 # # ヘッダーのパラメータ
 # @app.get("/items/")
 # async def read_items(user_agent: Annotated[str | None, Header()] = None):
