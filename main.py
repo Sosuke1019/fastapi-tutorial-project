@@ -2,13 +2,16 @@ from typing import Union, Dict
 from enum import Enum
 from datetime import datetime, time, timedelta
 from uuid import UUID
-from fastapi import FastAPI, Query, Body, Cookie, Header
+from fastapi import FastAPI, Query, Body, Cookie, Header, Form
 from pydantic import BaseModel, Field, EmailStr
 from typing_extensions import Annotated, Literal
 
 app = FastAPI()
 
-
+# # フォームデータ
+# @app.post("/login/")
+# async def login(username: Annotated[str, Form()], password: Annotated[str, Form()]):
+#     return {"username": username}
 
 # # レスポンスステータスコード
 # @app.post("/items/")
