@@ -8,6 +8,13 @@ from typing_extensions import Annotated, Literal
 
 app = FastAPI()
 
+
+
+# # レスポンスステータスコード
+# @app.post("/items/")
+# async def create_item(name: str):
+#     return {"name": name}
+
 # # モデル -より詳しく
 # class UserBase(BaseModel):
 #     username: str
