@@ -9,6 +9,19 @@ from typing_extensions import Annotated, Literal
 
 app = FastAPI()
 
+# # リクエストフォームとファイル
+# @app.post("/files?")
+# async def create_file(
+#     file: Annotated[bytes, File()],
+#     fileb: Annotated[UploadFile, File()],
+#     token: Annotated[str, Form()],
+# ):
+#     return {
+#         "filesize": len(file),
+#         "token": token,
+#         "fileb_content_type": fileb.content_type
+#     }
+
 # # リクエストファイル
 # @app.post("/files?")
 # async def create_file(files: Annotated[list[bytes], File(description="A file read as bytes")]):
