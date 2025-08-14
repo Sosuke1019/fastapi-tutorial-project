@@ -8,6 +8,18 @@ from typing_extensions import Annotated, Literal
 
 app = FastAPI()
 
+
+
+# # フォームモデル
+# class FormData(BaseModel):
+#     username: str
+#     password: str
+#     model_config = {"extra": "forbid"}
+
+# @app.post("/login/")
+# async def login(data: Annotated[FormData, Form()]):
+#     return data
+
 # # フォームデータ
 # @app.post("/login/")
 # async def login(username: Annotated[str, Form()], password: Annotated[str, Form()]):
