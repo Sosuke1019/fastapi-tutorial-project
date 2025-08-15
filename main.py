@@ -2,12 +2,77 @@ from typing import Union, Dict
 from enum import Enum
 from datetime import datetime, time, timedelta
 from uuid import UUID
-from fastapi.responses import HTMLResponse
-from fastapi import FastAPI, Query, Body, Cookie, Header, Form, File, UploadFile
+from fastapi import FastAPI, Query, Body, Cookie, Header, Form, File, UploadFile, HTTPException, Request, status
+from fastapi.exception_handlers import (
+    http_exception_handler,
+    request_validation_exception_handler
+)
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import PlainTextResponse, JSONResponse
 from pydantic import BaseModel, Field, EmailStr
 from typing_extensions import Annotated, Literal
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
+
+# # エラーハンドリング
+# class UnicornException(Exception):
+#     def __init__(self, name: str):
+#         self.name = name
+
+# class Item(BaseModel):
+#     title: str
+#     size: int
+
+# items = {"foo": "The Foo Wrestlers"}
+
+# @app.exception_handler(StarletteHTTPException)
+# async def custom_http_exception_handler(request, exc):
+#     print(f"OMG! An HTTP error!: {repr(exc)}")    
+#     return await http_exception_handler(request, exc)
+
+# @app.exception_handler(RequestValidationError)
+# async def validation_exception_handler(request: Request, exc: RequestValidationError):
+#     return JSONResponse(
+#         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+#         content=jsonable_encoder({"detail": exc.errors(), "body": exc.body})
+#     )
+
+# @app.exception_handler(UnicornException)
+# async def unicorn_exception_handler(request: Request, exc: UnicornException):
+#     return JSONResponse(
+#         status_code= 418,
+#         content={"message": f"Oops! {exc.name} did something. There goes a rainbow..."},
+#     )
+
+# @app.post("/items/")
+# async def create_item(item: Item):
+#     return item
+
+# @app.get("/items/{item_id}")
+# async def read_item(item_id: int):
+#     if item_id == 3:
+#         raise HTTPException(status_code=418, detail="Nope! I don't like 3")
+#     return {"item_id": item_id}
+
+# # /unicorns/yoloをリクエストすると、path operationはUnicornExceptionをraiseする。しかし、これはunicorn_exception_handlerで処理される。
+# @app.get("/unicorns/{name}")
+# async def read_unicorn(name: str):
+#     if name == "yolo":
+#         raise UnicornException(name=name)
+#     return {"unicorn_name": name}
+
+# @app.get("/items-header/{item_id}")
+# async def read_item_header(item_id: str):
+#     if item_id not in items:
+#         raise HTTPException(
+#             status_code=404, 
+#             detail="Item not found",
+#             headers={"X-Error": "There goes my error"}
+#         )
+#     return {"item": items[item_id]}
 
 # # リクエストフォームとファイル
 # @app.post("/files?")
