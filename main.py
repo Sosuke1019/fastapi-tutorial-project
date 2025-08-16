@@ -11,11 +11,26 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse, JSONResponse
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, Field, EmailStr
 from typing_extensions import Annotated, Literal
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
+
+# # JSON互換エンコーダ
+# fake_db = {}
+
+# class Item(BaseModel):
+#     title: str
+#     timestamp: datetime
+#     description: str | None = None
+
+# @app.put("/items/{id}")
+# def update_item(id: str, item: Item):
+#     json_compatible_item_data = jsonable_encoder(item)
+#     fake_db[id] = json_compatible_item_data
+#     return fake_db[id]
 
 # # Path Operationの設定
 # # Path Operationデコレータにパラメータを渡すことで、Path Operationのメタデータを簡単に設定・追加できる
