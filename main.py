@@ -2,7 +2,7 @@ from typing import Union, Dict
 from enum import Enum
 from datetime import datetime, time, timedelta
 from uuid import UUID
-from fastapi import FastAPI, Query, Body, Cookie, Header, Form, File, UploadFile, HTTPException, Request, status
+from fastapi import FastAPI, Query, Body, Cookie, Header, Form, File, UploadFile, HTTPException, Request, status, Depends
 from fastapi.exception_handlers import (
     http_exception_handler,
     request_validation_exception_handler
@@ -17,6 +17,19 @@ from typing_extensions import Annotated, Literal
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
+
+# # 依存関係 -最初のステップ
+# async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):
+#     return {"q": q, "skip": skip, "limit": limit}
+
+# @app.get("/items/")
+# # 型情報（dict） と FastAPIのメタデータ（Depends） を組み合わせている
+# async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
+#     return commons
+
+# @app.get("/users/")
+# async def read_users(commons: Annotated[dict, Depends(common_parameters)]):
+#     return commons
 
 # # ボディ -更新
 # class Item(BaseModel):
