@@ -18,6 +18,43 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
 
+# # yieldを持つ依存関係
+# # yeildはリソースの取得と解放を自動的に管理するための仕組み
+# async def get_db():
+#     # ①リクエスト処理前に実行される部分。データベースセッションを作成する。
+#     db = DBSession()
+#     # エンドポイント内でエラーが発生しても、正常に処理が完了しても確実にリソースが解放されるように、try-finallyを使う
+#     try:
+#         # ②ここで一時停止し、dbをエンドポイントに渡す。
+#         yeild db
+#     finally:
+#         # ③ レスポンス送信後に実行される部分。リソースの解放処理を行う。
+#         # ここではレスポンスはすでに送信済みのため、ここでのHTTPExceptionは意味ないので注意!
+#         # HTTPExceptionを投げるなら、yeildの前か、エンドポイント内にする。
+#         db.close()
+
+# async def dependency_a():
+#     dep_a = generate_dep_a()
+#     try:
+#         yield dep_a
+#     finally:
+#         dep_a.close()
+
+
+# async def dependency_b(dep_a: Annotated[DepA, Depends(dependency_a)]):
+#     dep_b = generate_dep_b()
+#     try:
+#         yield dep_b
+#     finally:
+#         dep_b.close(dep_a)
+
+
+# async def dependency_c(dep_b: Annotated[DepB, Depends(dependency_b)]):
+#     dep_c = generate_dep_c()
+#     try:
+#         yield dep_c
+#     finally:
+#         dep_c.close(dep_b)
 
 # # path operation デコレータの依存関係
 # async def verify_token(x_token: Annotated[str, Header()]):
