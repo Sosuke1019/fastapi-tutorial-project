@@ -12,11 +12,19 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse, JSONResponse
 from fastapi.encoders import jsonable_encoder
+from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel, Field, EmailStr
 from typing_extensions import Annotated, Literal
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
+
+# # セキュリティ -最初の一歩
+# oauth2_sheme = OAuth2PasswordBearer(tokenUrl="token")
+
+# @app.get("/items/")
+# async def read_items(hoge: str, token: Annotated[str, Depends(oauth2_sheme)]):
+#     return {"token": hoge}
 
 # # yieldを持つ依存関係
 # # yeildはリソースの取得と解放を自動的に管理するための仕組み
