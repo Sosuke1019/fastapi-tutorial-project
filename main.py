@@ -18,6 +18,24 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
 
+
+# # path operation デコレータの依存関係
+# async def verify_token(x_token: Annotated[str, Header()]):
+#     if x_token != "fake-super-secret-token":
+#         raise HTTPException(status_code=400, detail="X-Token header invalid")
+
+# async def verify_key(x_key: Annotated[str, Header()]):
+#     if x_key != "fake-super-secret-key":
+#         raise HTTPException(status_code=400, detail="X-Key header invalid")
+#     return x_key
+
+# # dependenciesを利用することで認証ロジック(verify_token, verify_key)とビジネスロジック(read_items)を分離できる
+# # 引数としてdependencies=[]を利用した場合、エンドポイント関数に返り値は渡されない
+# # 一方で、引数としてDepends()を利用した場合、エンドポイント関数に返り値が渡される
+# @app.get("/items", dependencies=[Depends(verify_token), Depends(verify_key)])
+# async def read_items():
+#     return [{"item": "Foo"}, {"item": "Bar"}]
+
 # # サブ依存関係
 # def query_extractor(q: str | None = None):
 #     return q
