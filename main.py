@@ -14,6 +14,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse, JSONResponse
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, EmailStr
 from typing_extensions import Annotated, Literal
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -22,6 +23,26 @@ from jose.exceptions import JWTError
 from passlib.context import CryptContext
 
 app = FastAPI()
+
+# # CORS(オリジン間リソース共有)
+# origins = [
+#     "http://localhost.tiangolo.com",
+#     "https://localhost.tiangolo.com",
+#     "http://localhost",
+#     "http://localhost:8080",
+# ]
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+# @app.get("/")
+# async def main():
+#     return {"message": "Hello World"}
 
 # # ミドルウェア
 # @app.middleware("http")
