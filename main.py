@@ -1,6 +1,7 @@
 from typing import Union, Dict, Any
 from enum import Enum
-from datetime import datetime, time, timedelta, timezone
+from datetime import datetime, timedelta, timezone
+import time
 from uuid import UUID
 from fastapi import FastAPI, Query, Body, Cookie, Header, Form, File, UploadFile, HTTPException, Request, status, Depends
 from fastapi.exception_handlers import (
@@ -21,6 +22,19 @@ from jose.exceptions import JWTError
 from passlib.context import CryptContext
 
 app = FastAPI()
+
+# # ミドルウェア
+# @app.middleware("http")
+# async def add_process_time_header(request: Request, call_next):
+#     start_time = time.perf_counter()
+#     response = await call_next(request)
+#     process_time = time.perf_counter() - start_time
+#     response.headers["X-Process-Time!!!!!"] = str(process_time)
+#     return response
+
+# @app.get("/")
+# async def root():
+#     return {"message": "Hello World"}
 
 # # パスワード（およびハッシュ化）によるOAuth2、JWTトークンによるBearer
 
