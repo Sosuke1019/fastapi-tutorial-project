@@ -1,28 +1,68 @@
-from typing import Union, Dict, Any
-from enum import Enum
-from datetime import datetime, timedelta, timezone
 import time
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+from typing import Annotated, Any, Dict, Literal, Union
 from uuid import UUID
-from fastapi import FastAPI, Query, Body, Cookie, Header, Form, File, UploadFile, HTTPException, Request, status, Depends
-from fastapi.exception_handlers import (
-    http_exception_handler,
-    request_validation_exception_handler
+
+from fastapi import (
+    BackgroundTasks,
+    Body,
+    Cookie,
+    Depends,
+    FastAPI,
+    File,
+    Form,
+    Header,
+    HTTPException,
+    Query,
+    Request,
+    UploadFile,
+    status,
 )
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import PlainTextResponse, JSONResponse
-from fastapi.encoders import jsonable_encoder
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field, EmailStr
-from typing_extensions import Annotated, Literal
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt
 from jose.exceptions import JWTError
 from passlib.context import CryptContext
+from pydantic import BaseModel, EmailStr, Field
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
+
+
+# # バックグラウンドタスク
+
+# # バックグランドとして実行される関数
+# def write_log(message: str):
+#     with open("log.txt", mode="a") as log:
+#         log.write(message)
+
+
+# def get_query(background_tasks: BackgroundTasks, q: str | None = None):
+#     if q:
+#         message = f"found query: {q}\n"
+#         background_tasks.add_task(write_log, message)
+#     return q
+
+
+# # バックグランドとして実行される関数
+# def write_notification(email: str, message=""):
+#     with open("notification.txt", mode="w") as email_file:
+#         content = f"notification for {email}: {message}"
+#         email_file.write(content)
+
+
+# @app.post("/send-notification/{email}")
+# async def send_notification(email: str, background_tasks: BackgroundTasks, q: Annotated[str, Depends(get_query)]):
+#     message = f"message to {email}\n"
+#     background_tasks.add_task(write_log, message)
+#     background_tasks.add_task(write_notification, email, message="some notification")
+#     return {"message": "Notification sent in the background"}
+
 
 # # CORS(オリジン間リソース共有)
 # origins = [
@@ -478,7 +518,7 @@ app = FastAPI()
 
 # @app.exception_handler(StarletteHTTPException)
 # async def custom_http_exception_handler(request, exc):
-#     print(f"OMG! An HTTP error!: {repr(exc)}")    
+#     print(f"OMG! An HTTP error!: {repr(exc)}")
 #     return await http_exception_handler(request, exc)
 
 # @app.exception_handler(RequestValidationError)
@@ -516,7 +556,7 @@ app = FastAPI()
 # async def read_item_header(item_id: str):
 #     if item_id not in items:
 #         raise HTTPException(
-#             status_code=404, 
+#             status_code=404,
 #             detail="Item not found",
 #             headers={"X-Error": "There goes my error"}
 #         )
@@ -736,7 +776,7 @@ app = FastAPI()
 
 # @app.put("/items/{item_id}")
 # async def update_item(
-#     item_id: int, 
+#     item_id: int,
 #     item: Annotated[
 #         Item,
 #         Body(
@@ -750,7 +790,7 @@ app = FastAPI()
 #             ],
 #         )
 #     ]
-    
+
 # ):
 #     results = {"item_id": item_id, "item": item}
 #     return results
@@ -885,10 +925,10 @@ app = FastAPI()
 # async def get_model(model_name: ModelName): # パスオペレーション関数を定義
 #     if model_name is ModelName.alexnet:
 #         return {"mode_name": model_name, "message": "Deep Learning FTW!"}
-    
+
 #     if model_name.value == "resnet":
 #         return {"mode_name": model_name, "message": "LeCNN all the images"}
-    
+
 #     return {"mode_name": model_name, "message": "Have some residuals"}
 
 # @app.get("/files/{path:path}")
