@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Annotated, Any, Dict, Literal, Union
 from uuid import UUID
 
+import uvicorn
 from fastapi import (
     BackgroundTasks,
     Body,
@@ -954,3 +955,6 @@ app = FastAPI(
 # @app.get("/files/{path:path}")
 # async def read_file(path: str):
 #     return {"file_path": path}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
