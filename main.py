@@ -31,7 +31,27 @@ from passlib.context import CryptContext
 from pydantic import BaseModel, EmailStr, Field
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-app = FastAPI()
+description = """
+FastAPIチュートリアルでは、FastAPIの基本機能を一通り実装しています
+"""
+
+app = FastAPI(
+    title="FastAPIチュートリアル",
+    description=description,
+    version="1.0.0",
+    openapi_url="/api/v1/openapi.json",
+)
+
+# # メタデータとドキュメントのURL
+
+# @app.get("/users/", tags=["users"])
+# async def get_users():
+#     return [{"name": "Harry"}, {"name": "Ron"}]
+
+
+# @app.get("/items/", tags=["items"])
+# async def get_items():
+#     return [{"name": "wand"}, {"name": "flying broom"}]
 
 
 # # バックグラウンドタスク
